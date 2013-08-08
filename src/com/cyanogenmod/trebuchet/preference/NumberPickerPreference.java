@@ -21,6 +21,7 @@ import android.content.res.TypedArray;
 import android.preference.Preference;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -28,6 +29,8 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 
 import com.cyanogenmod.trebuchet.R;
+
+import java.lang.reflect.Field;
 
 /*
  * @author Danesh
@@ -43,8 +46,8 @@ public class NumberPickerPreference extends DialogPreference {
 
     public NumberPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray dialogType = context.obtainStyledAttributes(attrs,
-                com.android.internal.R.styleable.DialogPreference, 0, 0);
+//        TypedArray dialogType = context.obtainStyledAttributes(attrs,
+//                R.styleable.DialogPreference, 0, 0);
         TypedArray numberPickerType = context.obtainStyledAttributes(attrs,
                 R.styleable.NumberPickerPreference, 0, 0);
 
@@ -54,9 +57,9 @@ public class NumberPickerPreference extends DialogPreference {
         mMax = numberPickerType.getInt(R.styleable.NumberPickerPreference_max, 5);
         mMin = numberPickerType.getInt(R.styleable.NumberPickerPreference_min, 0);
 
-        mDefault = dialogType.getInt(com.android.internal.R.styleable.Preference_defaultValue, mMin);
+//        mDefault = dialogType.getInt(com.android.internal.R.styleable.Preference_defaultValue, mMin);
 
-        dialogType.recycle();
+//        dialogType.recycle();
         numberPickerType.recycle();
     }
 
@@ -86,12 +89,35 @@ public class NumberPickerPreference extends DialogPreference {
         mNumberPicker.setWrapSelectorWheel(false);
 
         // No keyboard popup
-        EditText textInput = (EditText) mNumberPicker.findViewById(com.android.internal.R.id.numberpicker_input);
-        textInput.setCursorVisible(false);
-        textInput.setFocusable(false);
-        textInput.setFocusableInTouchMode(false);
+        disableTextInput(mNumberPicker);
+//        EditText textInput = (EditText) mNumberPicker.findViewById(com.android.internal.R.id.numberpicker_input);
+//        textInput.setCursorVisible(false);
+//        textInput.setFocusable(false);
+//        textInput.setFocusableInTouchMode(false);
 
         return view;
+    }
+
+    /*
+     * reflection of NumberPicker.java
+     * verified in 4.1, 4.2
+     * */
+    private void disableTextInput(NumberPicker np){
+        if (np==null) return;
+        Class<?> classType = np.getClass();
+        Field inputTextField;
+        try {
+            inputTextField = classType.getDeclaredField("mInputText");
+            inputTextField.setAccessible(true);
+            EditText textInput = (EditText) inputTextField.get(np);
+            if (textInput!=null){
+                textInput.setCursorVisible(false);
+                textInput.setFocusable(false);
+                textInput.setFocusableInTouchMode(false);
+            }
+        } catch (Exception e) {
+            Log.d("trebuchet", "NumberPickerPreference disableTextInput error", e);
+        }
     }
 
     @Override

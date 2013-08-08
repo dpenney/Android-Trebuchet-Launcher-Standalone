@@ -102,7 +102,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.common.Search;
+import com.cyanogenmod.trebuchet.R;
 import com.cyanogenmod.trebuchet.DropTarget.DragObject;
 import com.cyanogenmod.trebuchet.preference.*;
 
@@ -1080,7 +1080,6 @@ public final class Launcher extends Activity
      * Add an application shortcut to the workspace.
      *
      * @param data The intent describing the application.
-     * @param cellInfo The position on screen where to create the shortcut.
      */
     void completeAddApplication(Intent data, long container, int screen, int cellX, int cellY) {
         final int[] cellXY = mTmpAddItemCellCoordinates;
@@ -1725,7 +1724,7 @@ public final class Launcher extends Activity
         }
         if (appSearchData == null) {
             appSearchData = new Bundle();
-            appSearchData.putString(Search.SOURCE, "launcher-search");
+            appSearchData.putString("source", "launcher-search");
         }
         Rect sourceBounds = new Rect();
         if (mSearchDropTargetBar != null) {
@@ -1967,14 +1966,19 @@ public final class Launcher extends Activity
             appWidgetId = getAppWidgetHost().allocateAppWidgetId();
             Bundle options = info.bindOptions;
 
-            boolean success;
-            if (options != null) {
-                success = mAppWidgetManager.bindAppWidgetIdIfAllowed(appWidgetId,
-                        info.componentName, options);
-            } else {
-                success = mAppWidgetManager.bindAppWidgetIdIfAllowed(appWidgetId,
+            //todo add options bundle for 4.2+
+            boolean success = mAppWidgetManager.bindAppWidgetIdIfAllowed(appWidgetId,
                         info.componentName);
-            }
+//            if (options != null) {
+//                success = mAppWidgetManager.bindAppWidgetIdIfAllowed(appWidgetId,
+//                        info.componentName);
+//
+////                success = mAppWidgetManager.bindAppWidgetIdIfAllowed(appWidgetId,
+////                        info.componentName, options);
+//            } else {
+//                success = mAppWidgetManager.bindAppWidgetIdIfAllowed(appWidgetId,
+//                        info.componentName);
+//            }
             if (success) {
                 addAppWidgetImpl(appWidgetId, info, null, info.info);
             } else {

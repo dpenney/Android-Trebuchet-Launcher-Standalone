@@ -107,7 +107,7 @@ public class Preferences extends PreferenceActivity
         if (adapter == null) {
             super.setListAdapter(null);
         } else {
-            super.setListAdapter(new HeaderAdapter(this, getHeaders()));
+            //super.setListAdapter(new HeaderAdapter(this, getHeaders()));
         }
     }
 
@@ -244,10 +244,10 @@ public class Preferences extends PreferenceActivity
                                 R.layout.preference_header_item, parent,
                                 false);
                         holder.icon = (ImageView) view.findViewById(R.id.icon);
-                        holder.title = (TextView)
-                                view.findViewById(com.android.internal.R.id.title);
-                        holder.summary = (TextView)
-                                view.findViewById(com.android.internal.R.id.summary);
+//                        holder.title = (TextView)
+//                                view.findViewById(com.android.internal.R.id.title);
+//                        holder.summary = (TextView)
+//                                view.findViewById(com.android.internal.R.id.summary);
                         break;
                 }
                 view.setTag(holder);

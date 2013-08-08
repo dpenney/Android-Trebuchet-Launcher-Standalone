@@ -748,25 +748,25 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
 
     Bundle getDefaultOptionsForWidget(PendingAddWidgetInfo info) {
         Bundle options = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            AppWidgetResizeFrame.getWidgetSizeRanges(mLauncher, info.spanX, info.spanY, mTmpRect);
-            Rect padding = AppWidgetHostView.getDefaultPaddingForWidget(mLauncher,
-                    info.componentName, null);
-
-            float density = getResources().getDisplayMetrics().density;
-            int xPaddingDips = (int) ((padding.left + padding.right) / density);
-            int yPaddingDips = (int) ((padding.top + padding.bottom) / density);
-
-            options = new Bundle();
-            options.putInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH,
-                    mTmpRect.left - xPaddingDips);
-            options.putInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT,
-                    mTmpRect.top - yPaddingDips);
-            options.putInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH,
-                    mTmpRect.right - xPaddingDips);
-            options.putInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT,
-                    mTmpRect.bottom - yPaddingDips);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+//            AppWidgetResizeFrame.getWidgetSizeRanges(mLauncher, info.spanX, info.spanY, mTmpRect);
+//            Rect padding = AppWidgetHostView.getDefaultPaddingForWidget(mLauncher,
+//                    info.componentName, null);
+//
+//            float density = getResources().getDisplayMetrics().density;
+//            int xPaddingDips = (int) ((padding.left + padding.right) / density);
+//            int yPaddingDips = (int) ((padding.top + padding.bottom) / density);
+//
+//            options = new Bundle();
+//            options.putInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH,
+//                    mTmpRect.left - xPaddingDips);
+//            options.putInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT,
+//                    mTmpRect.top - yPaddingDips);
+//            options.putInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH,
+//                    mTmpRect.right - xPaddingDips);
+//            options.putInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT,
+//                    mTmpRect.bottom - yPaddingDips);
+//        }
         return options;
     }
 
@@ -784,18 +784,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
             @Override
             public void run() {
                 mWidgetLoadingId = mLauncher.getAppWidgetHost().allocateAppWidgetId();
-                // Options will be null for platforms with JB or lower, so this serves as an
-                // SDK level check.
-                if (options == null) {
-                    if (AppWidgetManager.getInstance(mLauncher).bindAppWidgetIdIfAllowed(
-                            mWidgetLoadingId, info.componentName)) {
-                        mWidgetCleanupState = WIDGET_BOUND;
-                    }
-                } else {
-                    if (AppWidgetManager.getInstance(mLauncher).bindAppWidgetIdIfAllowed(
-                            mWidgetLoadingId, info.componentName, options)) {
-                        mWidgetCleanupState = WIDGET_BOUND;
-                    }
+                if (AppWidgetManager.getInstance(mLauncher)
+                        .bindAppWidgetIdIfAllowed(mWidgetLoadingId, info.componentName)) {
+                    mWidgetCleanupState = WIDGET_BOUND;
                 }
             }
         };

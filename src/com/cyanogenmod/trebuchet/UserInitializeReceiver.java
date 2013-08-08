@@ -43,19 +43,20 @@ public class UserInitializeReceiver extends BroadcastReceiver {
         ArrayList<Integer> list = new ArrayList<Integer>();
         addWallpapers(resources, packageName, R.array.wallpapers, list);
         addWallpapers(resources, packageName, R.array.extra_wallpapers, list);
-        WallpaperManager wpm = (WallpaperManager) context.getSystemService(
-                Context.WALLPAPER_SERVICE);
-        for (int i=1; i<list.size(); i++) {
-            int resid = list.get(i);
-            if (!wpm.hasResourceWallpaper(resid)) {
-                try {
-                    wpm.setResource(resid);
-                } catch (IOException e) {
-                    // Ignore
-                }
-                return;
-            }
-        }
+//        WallpaperManager wpm = (WallpaperManager) context.getSystemService(
+//                Context.WALLPAPER_SERVICE);
+//todo set the wallpaper
+//        for (int i=1; i<list.size(); i++) {
+//            int resid = list.get(i);
+//            if (!wpm.hasResourceWallpaper(resid)) {
+//                try {
+//                    wpm.setResource(resid);
+//                } catch (IOException e) {
+//                    // Ignore
+//                }
+//                return;
+//            }
+//        }
     }
 
     private void addWallpapers(Resources resources, String packageName, int resid,

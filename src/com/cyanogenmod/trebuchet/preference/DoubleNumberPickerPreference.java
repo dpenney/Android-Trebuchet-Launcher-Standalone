@@ -29,6 +29,8 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import com.cyanogenmod.trebuchet.R;
 
+import java.lang.reflect.Field;
+
 /*
  * @author Danesh
  * @author nebkat
@@ -49,8 +51,8 @@ public class DoubleNumberPickerPreference extends DialogPreference {
 
     public DoubleNumberPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray dialogType = context.obtainStyledAttributes(attrs,
-                com.android.internal.R.styleable.DialogPreference, 0, 0);
+//        TypedArray dialogType = context.obtainStyledAttributes(attrs,
+//                com.android.internal.R.styleable.DialogPreference, 0, 0);
         TypedArray doubleNumberPickerType = context.obtainStyledAttributes(attrs,
                 R.styleable.DoubleNumberPickerPreference, 0, 0);
 
@@ -70,7 +72,7 @@ public class DoubleNumberPickerPreference extends DialogPreference {
         mDefault1 = doubleNumberPickerType.getInt(R.styleable.DoubleNumberPickerPreference_defaultValue1, mMin1);
         mDefault2 = doubleNumberPickerType.getInt(R.styleable.DoubleNumberPickerPreference_defaultValue2, mMin2);
 
-        dialogType.recycle();
+//        dialogType.recycle();
         doubleNumberPickerType.recycle();
     }
 
@@ -126,16 +128,18 @@ public class DoubleNumberPickerPreference extends DialogPreference {
         }
 
         // No keyboard popup
-        EditText textInput1 = (EditText) mNumberPicker1.findViewById(com.android.internal.R.id.numberpicker_input);
-        EditText textInput2 = (EditText) mNumberPicker2.findViewById(com.android.internal.R.id.numberpicker_input);
-        if (textInput1 != null && textInput2 != null) {
-            textInput1.setCursorVisible(false);
-            textInput1.setFocusable(false);
-            textInput1.setFocusableInTouchMode(false);
-            textInput2.setCursorVisible(false);
-            textInput2.setFocusable(false);
-            textInput2.setFocusableInTouchMode(false);
-        }
+        disableTextInput(mNumberPicker1);
+        disableTextInput(mNumberPicker2);
+//        EditText textInput1 = (EditText) mNumberPicker1.findViewById(com.android.internal.R.id.numberpicker_input);
+//        EditText textInput2 = (EditText) mNumberPicker2.findViewById(com.android.internal.R.id.numberpicker_input);
+//        if (textInput1 != null && textInput2 != null) {
+//            textInput1.setCursorVisible(false);
+//            textInput1.setFocusable(false);
+//            textInput1.setFocusableInTouchMode(false);
+//            textInput2.setCursorVisible(false);
+//            textInput2.setFocusable(false);
+//            textInput2.setFocusableInTouchMode(false);
+//        }
 
         return view;
     }
@@ -181,6 +185,27 @@ public class DoubleNumberPickerPreference extends DialogPreference {
     }
     public void setDefault2(int def) {
         mDefault2 = def;
+    }
+    /*
+         * reflection of NumberPicker.java
+         * verified in 4.1, 4.2
+         * */
+    private void disableTextInput(NumberPicker np){
+        if (np==null) return;
+        Class<?> classType = np.getClass();
+        Field inputTextField;
+        try {
+            inputTextField = classType.getDeclaredField("mInputText");
+            inputTextField.setAccessible(true);
+            EditText textInput = (EditText) inputTextField.get(np);
+            if (textInput!=null){
+                textInput.setCursorVisible(false);
+                textInput.setFocusable(false);
+                textInput.setFocusableInTouchMode(false);
+            }
+        } catch (Exception e) {
+            Log.d("trebuchet", "DoubleNumberPickerPreference disableTextInput error",e);
+        }
     }
 
 }

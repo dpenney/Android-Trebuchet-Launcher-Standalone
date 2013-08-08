@@ -321,6 +321,10 @@ public class Workspace extends PagedView
     private static final int SCROLLING_INDICATOR_TOP = 1;
     private static final int SCROLLING_INDICATOR_BOTTOM = 2;
 
+    protected int mScrollX = getScrollX();
+    protected int mScrollY = getScrollY();
+
+
     /**
      * Used to inflate the Workspace from XML.
      *

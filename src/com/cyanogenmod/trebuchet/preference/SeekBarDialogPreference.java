@@ -24,15 +24,15 @@ public class SeekBarDialogPreference extends DialogPreference implements SeekBar
 
     public SeekBarDialogPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray dialogType = context.obtainStyledAttributes(attrs,
-                com.android.internal.R.styleable.DialogPreference, 0, 0);
+//        TypedArray dialogType = context.obtainStyledAttributes(attrs,
+//                com.android.internal.R.styleable.DialogPreference, 0, 0);
         TypedArray seekBarType = context.obtainStyledAttributes(attrs,
                 R.styleable.SeekBarDialogPreference, 0, 0);
 
         mMax = seekBarType.getInt(R.styleable.SeekBarDialogPreference_max, 100);
         mMin = seekBarType.getInt(R.styleable.SeekBarDialogPreference_min, 0);
 
-        mDefault = dialogType.getInt(com.android.internal.R.styleable.Preference_defaultValue, mMin);
+//        mDefault = dialogType.getInt(com.android.internal.R.styleable.Preference_defaultValue, mMin);
 
         mPrefix = seekBarType.getString(R.styleable.SeekBarDialogPreference_prefix);
         mSuffix = seekBarType.getString(R.styleable.SeekBarDialogPreference_suffix);
@@ -43,7 +43,7 @@ public class SeekBarDialogPreference extends DialogPreference implements SeekBar
             mSuffix = "%";
         }
 
-        dialogType.recycle();
+//        dialogType.recycle();
         seekBarType.recycle();
     }
 
