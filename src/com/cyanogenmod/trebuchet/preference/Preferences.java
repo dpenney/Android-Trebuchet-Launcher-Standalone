@@ -36,6 +36,7 @@ import android.widget.TextView;
 import com.cyanogenmod.trebuchet.LauncherApplication;
 import com.cyanogenmod.trebuchet.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Preferences extends PreferenceActivity
@@ -107,7 +108,12 @@ public class Preferences extends PreferenceActivity
         if (adapter == null) {
             super.setListAdapter(null);
         } else {
-            //super.setListAdapter(new HeaderAdapter(this, getHeaders()));
+            List<Header> headers = new ArrayList<Header>(adapter.getCount());
+            for (int i = 0; i < adapter.getCount(); i++) {
+                Header header = (Header)adapter.getItem(i);
+                headers.add(header);
+            }
+            super.setListAdapter(new HeaderAdapter(this, headers));
         }
     }
 
@@ -244,10 +250,10 @@ public class Preferences extends PreferenceActivity
                                 R.layout.preference_header_item, parent,
                                 false);
                         holder.icon = (ImageView) view.findViewById(R.id.icon);
-//                        holder.title = (TextView)
-//                                view.findViewById(com.android.internal.R.id.title);
-//                        holder.summary = (TextView)
-//                                view.findViewById(com.android.internal.R.id.summary);
+                        holder.title = (TextView)
+                                view.findViewById(R.id.title);
+                        holder.summary = (TextView)
+                                view.findViewById(R.id.summary);
                         break;
                 }
                 view.setTag(holder);

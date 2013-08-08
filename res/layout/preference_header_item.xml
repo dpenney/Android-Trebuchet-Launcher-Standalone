@@ -34,7 +34,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="0dip"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dip"
         android:layout_marginBottom="6dip"
