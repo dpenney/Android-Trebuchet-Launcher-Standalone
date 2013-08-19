@@ -59,8 +59,10 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.BIND_APPWIDGET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" />
+
 
     <application
         android:name="com.cyanogenmod.trebuchet.LauncherApplication"
@@ -69,6 +71,14 @@
         android:hardwareAccelerated="true"
         android:largeHeap="@bool/config_largeHeap"
         >
+
+        <service
+                android:name="org.penney.launcher.AppUsageService"
+                android:process=":AppUsageProcess"
+                android:label="@string/AppUsageService"
+                >
+        </service>
+
         <activity
             android:name="com.cyanogenmod.trebuchet.Launcher"
             android:launchMode="singleTask"

@@ -183,12 +183,12 @@ public class HiddenAppsActivity extends ListActivity implements MenuItem.OnMenuI
 
     private class AppsAdapter extends ArrayAdapter<ResolveInfo> {
 
-        private final LayoutInflater mInfaltor;
+        private final LayoutInflater mInflater;
 
         public AppsAdapter(Context context, int textViewResourceId) {
             super(context, textViewResourceId);
 
-            mInfaltor = LayoutInflater.from(context);
+            mInflater = LayoutInflater.from(context);
 
         }
 
@@ -202,7 +202,7 @@ public class HiddenAppsActivity extends ListActivity implements MenuItem.OnMenuI
             final ResolveInfo info = getItem(position);
 
             if(convertView == null) {
-                convertView = mInfaltor.inflate(R.layout.hidden_apps_list_item, parent, false);
+                convertView = mInflater.inflate(R.layout.hidden_apps_list_item, parent, false);
             }
 
             final View item = convertView;
