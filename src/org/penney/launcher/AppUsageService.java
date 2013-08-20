@@ -7,7 +7,9 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
-import java.util.Iterator;
+import org.penney.launcher.db.UsageStatDAO;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,6 +21,9 @@ public class AppUsageService extends Service {
 
     private static final String TAG = "org.penney.launcher.AppUsageService";
     private Timer t;
+    private HashMap<String, Long> logs = new HashMap<String, Long>();
+    private UsageStatDAO db;
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "Service start called");
@@ -27,13 +32,18 @@ public class AppUsageService extends Service {
 
     @Override
     public void onCreate() {
+
+        db = new UsageStatDAO(getApplicationContext());
+        db.open();
+
         final Handler handler = new Handler();
         t = new Timer();
         t.scheduleAtFixedRate(new TimerTask() {
+            String previousPackage = "THEREWASONCEALITTLEFISH";
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
-                        logRunningApp();
+                        previousPackage = logRunningApp(previousPackage);
                     }
                 });
             }
@@ -41,17 +51,32 @@ public class AppUsageService extends Service {
         Log.d(TAG, "service created");
     }
 
-    private void logRunningApp() {
+    private String logRunningApp(String previousPackage) {
         ActivityManager localActivityManager = (ActivityManager)getSystemService("activity");
         List<ActivityManager.RunningTaskInfo> running = localActivityManager.getRunningTasks(1);
 
-        Log.d(TAG, "tick " + running.get(0).baseActivity.getPackageName());
+        String packageName = running.get(0).baseActivity.getPackageName();
+        if(packageName != null && !packageName.equals(previousPackage))
+        {
+            //Just started app
+            long now = System.currentTimeMillis();
+            logs.put(packageName, now);
+            Long previousStart = logs.get(previousPackage);
+            if(previousStart != null)
+            {
+                long runTime = now - previousStart;
+                db.saveLog(previousStart, now, runTime, previousPackage);
+            }
+        }
+        Log.d(TAG, "tick " + packageName + ":" + previousPackage);
+        return packageName;
     }
 
     @Override
     public void onDestroy() {
         Log.d(TAG, "ouchy doodles");
         t.cancel();
+        db.close();
     }
 
     @Override
