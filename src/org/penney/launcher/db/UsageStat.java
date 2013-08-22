@@ -52,4 +52,12 @@ public class UsageStat {
     public void setRunTime(long runTime) {
         this.runTime = runTime;
     }
+
+    @Override
+    public String toString() {
+        return "UsageStat{" +
+                "package_name='" + package_name + '\'' +
+                ", runTime=" + runTime +
+                '}';
+    }
 }

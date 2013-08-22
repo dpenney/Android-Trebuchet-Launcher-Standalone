@@ -18,7 +18,7 @@ public class DBHelper extends SQLiteOpenHelper implements DAO{
     public List<String> tableNames = new ArrayList<String>();
 
     private static final String DATABASE_NAME = "appusage.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -63,5 +63,16 @@ public class DBHelper extends SQLiteOpenHelper implements DAO{
         script.append(");");
         return script.toString();
     }
+
+    public static String[] names(TableEnum[] vals) {
+        //todo this can be cached and could even be created when we create the table
+        String[] colNames = new String[vals.length];
+        for (int i = 0; i < vals.length; i++) {
+            colNames[i] = vals[i].toString();
+        }
+        return colNames;
+    }
+
+
 
 }

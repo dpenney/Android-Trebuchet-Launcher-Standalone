@@ -32,6 +32,13 @@
                 android:targetPackage="com.cyanogenmod.trebuchet"
                 android:targetClass="com.cyanogenmod.trebuchet.preference.HiddenAppsActivity"/>
         </Preference>
+        <Preference android:key="ui_drawer_bucket_apps"
+            android:title="Bucket Apps"
+            android:summary="Show bucket apps">
+            <intent
+                android:targetPackage="com.cyanogenmod.trebuchet"
+                android:targetClass="com.cyanogenmod.trebuchet.preference.BucketActivity"/>
+        </Preference>
         <CheckBoxPreference android:key="ui_drawer_remove_hidden_apps_shortcuts"
             android:title="@string/preferences_interface_drawer_hidden_apps_shortcuts_title"
             android:summary="@string/preferences_interface_drawer_hidden_apps_shortcuts_summary"

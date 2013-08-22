@@ -25,7 +25,11 @@ public interface DAO {
         public String getTableName() {
             return "usage_log";
         }
+
     }
+
+
+
 
     public enum Bucket implements TableEnum {
         _id("integer primary key autoincrement"),
@@ -38,21 +42,22 @@ public interface DAO {
             this.type = type;
         }
 
-        public String getType() {
-            return type;
-        }
+        public String getType() { return type; }
 
         @Override
-        public String getTableName() {
-            return "bucket";
-        }
+        public String getTableName() { return "bucket";  }
     }
 
     public interface TableEnum {
         public String getTableName();
 
         public String getType();
+
     }
 
+    public class EnumHelper {
 
+    }
 }
+
+
