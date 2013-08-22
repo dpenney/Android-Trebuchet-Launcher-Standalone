@@ -9,10 +9,9 @@ import android.util.Log;
 /**
  * Created by penneyd on 8/19/13.
  */
-public class UsageStatDAO {
+public class UsageStatDAO implements DAO {
     private SQLiteDatabase db;
     private DBHelper helper;
-    private String[] allCols = {DBHelper.COLUMN_ID, DBHelper.COLUMN_PACKAGE_NAME, DBHelper.COLUMN_START_TIME, DBHelper.COLUMN_END_TIME, DBHelper.COLUMN_RUN_TIME};
 
     public UsageStatDAO(Context context) {
         helper = new DBHelper(context);
@@ -28,12 +27,12 @@ public class UsageStatDAO {
 
     public void saveLog(long startTime, long endTime, long runTime, String packageName) {
         ContentValues values = new ContentValues();
-        values.put(DBHelper.COLUMN_START_TIME, startTime);
-        values.put(DBHelper.COLUMN_END_TIME, endTime);
-        values.put(DBHelper.COLUMN_RUN_TIME, runTime);
-        values.put(DBHelper.COLUMN_PACKAGE_NAME, packageName);
+        values.put(Usage.startTime.toString(), startTime);
+        values.put(Usage.endTime.toString(), endTime);
+        values.put(Usage.runTime.toString(), runTime);
+        values.put(Usage.packageName.toString(), packageName);
 
-        db.insert(DBHelper.TABLE_LOG, null, values);
+        db.insert(Usage._id.getTableName(), null, values);
         Log.i(UsageStatDAO.class.getName(), "saving log for " + packageName + " ran for " + runTime + "ms");
     }
 }

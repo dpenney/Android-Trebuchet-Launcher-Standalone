@@ -2,6 +2,7 @@ package org.penney.launcher;
 
 import android.app.ActivityManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
@@ -52,7 +53,7 @@ public class AppUsageService extends Service {
     }
 
     private String logRunningApp(String previousPackage) {
-        ActivityManager localActivityManager = (ActivityManager)getSystemService("activity");
+        ActivityManager localActivityManager = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> running = localActivityManager.getRunningTasks(1);
 
         String packageName = running.get(0).baseActivity.getPackageName();
