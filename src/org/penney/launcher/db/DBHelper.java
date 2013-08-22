@@ -17,6 +17,15 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_END_TIME = "endTime";
     public static final String COLUMN_RUN_TIME = "runTime";
 
+    public static final String TABLE_BUCKET = "app_buckets";
+    public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_PACKAGE_NAME = "packageName";
+    public static final String COLUMN_START_TIME = "startTime";
+    public static final String COLUMN_END_TIME = "endTime";
+    public static final String COLUMN_RUN_TIME = "runTime";
+
+
+
     private static final String DATABASE_NAME = "appusage.db";
     private static final int DATABASE_VERSION = 3;
 
@@ -27,6 +36,9 @@ public class DBHelper extends SQLiteOpenHelper {
             + COLUMN_END_TIME + " integer, "
             + COLUMN_RUN_TIME + " integer "
             + ");";
+
+
+
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
