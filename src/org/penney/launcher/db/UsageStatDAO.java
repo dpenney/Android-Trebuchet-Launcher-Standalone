@@ -63,7 +63,7 @@ public class UsageStatDAO implements DAO {
         UsageStat stat = new UsageStat();
         int i=0;
         stat.setId(cursor.getLong(i++));
-        stat.setPackage_name(cursor.getString(i++));
+        stat.setPackageName(cursor.getString(i++));
         stat.setStartTime(cursor.getLong(i++));
         stat.setEndTime(cursor.getLong(i++));
         stat.setRunTime(cursor.getLong(i));
@@ -73,7 +73,7 @@ public class UsageStatDAO implements DAO {
     private UsageStat cursorToSummary(Cursor cursor) {
         UsageStat stat = new UsageStat();
         int i=0;
-        stat.setPackage_name(cursor.getString(i++));
+        stat.setPackageName(cursor.getString(i++));
         stat.setRunTime(cursor.getLong(i));
         return stat;
     }

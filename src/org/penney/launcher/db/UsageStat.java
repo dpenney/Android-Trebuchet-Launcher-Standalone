@@ -5,7 +5,7 @@ package org.penney.launcher.db;
  */
 public class UsageStat {
     private long id;
-    private String package_name;
+    private String packageName;
     private long startTime;
     private long endTime;
     private long runTime;
@@ -21,12 +21,12 @@ public class UsageStat {
         this.id = id;
     }
 
-    public String getPackage_name() {
-        return package_name;
+    public String getPackageName() {
+        return packageName;
     }
 
-    public void setPackage_name(String package_name) {
-        this.package_name = package_name;
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
     public long getStartTime() {
@@ -55,9 +55,6 @@ public class UsageStat {
 
     @Override
     public String toString() {
-        return "UsageStat{" +
-                "package_name='" + package_name + '\'' +
-                ", runTime=" + runTime +
-                '}';
+        return "Used for " + runTime/1000 + "s";
     }
 }

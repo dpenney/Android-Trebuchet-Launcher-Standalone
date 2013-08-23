@@ -48,6 +48,10 @@
     <!-- Noun, menu item used to reset hidden apps list -->
     <string name="menu_hidden_apps_delete">Reset</string>
 
+
+    <string name="menu_bucket_apps_add">Assign Bucket</string>
+
+
     <!-- The title text for the All Apps Sort cling [CHAR_LIMIT=none] -->
     <string name="all_apps_sort_cling_title">Sort your apps</string>
     <!-- The description of how to pick sort apps in the drawer [CHAR_LIMIT=none] -->
